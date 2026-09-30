@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login & Cadastro | Impulsa+</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="login-page">
+    <div class="login-card">
+     
+      <div class="form-toggle-btns" style="display: flex; justify-content: space-around; margin-bottom: 20px;">
+        <button id="btn-aba-login" onclick="alternarAba('login')" style="background: none; border: none; font-size: 18px; font-weight: bold; cursor: pointer; border-bottom: 2px solid #000; padding-bottom: 5px;">Entrar</button>
+        <button id="btn-aba-cadastro" onclick="alternarAba('cadastro')" style="background: none; border: none; font-size: 18px; font-weight: bold; cursor: pointer; color: #888; padding-bottom: 5px;">Cadastrar</button>
+      </div>
+
+
+      <form id="form-login" class="login-form">
+        <h1>Entrar no Impulsa+</h1>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="seu@email.com" required>
+
+
+        <label for="senha">Senha</label>
+        <input id="senha" name="senha" type="password" placeholder="********" required>
+
+
+        <button type="submit">Entrar</button>
+        <p class="login-note" style="text-align: center; margin-top: 15px;">Ainda não tem conta? Clique em Cadastrar acima.</p>
+      </form>
+
+
+      <form id="form-cadastro" class="login-form" style="display: none;">
+        <h1>Criar Conta</h1>
+       
+        <label for="cad-nome">Nome Completo</label>
+        <input id="cad-nome" type="text" placeholder="Seu nome" required>
+
+
+        <label for="cad-email">Email</label>
+        <input id="cad-email" type="email" placeholder="seu@email.com" required>
+
+
+        <label for="cad-senha">Senha</label>
+        <input id="cad-senha" type="password" placeholder="Crie uma senha" required>
+
+
+        <label for="cad-fase">Fase Atual da sua Empresa</label>
+        <select id="cad-fase" style="width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc; font-family: inherit;" required>
+          <option value="" disabled selected>Selecione uma fase...</option>
+          <option value="Inicio">Início de Carreira</option>
+          <option value="Consolidacao">Consolidação</option>
+          <option value="Expansao">Expansão</option>
+        </select>
+
+
+        <button type="submit">Criar Minha Conta</button>
+      </form>
+
+
+    </div>
+  </div>
+
+
+  <script>
+    // Função para alternar visualmente entre as abas de Login e Cadastro
+    function alternarAba(aba) {
+      const formLogin = document.getElementById('form-login');
+      const formCadastro = document.getElementById('form-cadastro');
+      const btnLogin = document.getElementById('btn-aba-login');
+      const btnCadastro = document.getElementById('btn-aba-cadastro');
+
+
+      if (aba === 'login') {
+        formLogin.style.display = 'block';
+        formCadastro.style.display = 'none';
+        btnLogin.style.borderBottom = '2px solid #000';
+        btnLogin.style.color = '#000';
+        btnCadastro.style.borderBottom = 'none';
+        btnCadastro.style.color = '#888';
+      } else {
+        formLogin.style.display = 'none';
+        formCadastro.style.display = 'block';
+        btnCadastro.style.borderBottom = '2px solid #000';
+        btnCadastro.style.color = '#000';
+        btnLogin.style.borderBottom = 'none';
+        btnLogin.style.color = '#888';
+      }
+    }
+
+
+    // Capturando o envio do formulário de Login
+    document.getElementById('form-login').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const senha = document.getElementById('senha').value;
+
+
+      if (!email || !senha) {
+        alert('Por favor, informe email e senha para entrar.');
+        return;
+      }
+
+
+      try {
+        const resposta = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password: senha })
+        });
+        const resultado = await resposta.json();
+        if (!resposta.ok) {
+          throw new Error(resultado.error || 'Falha ao autenticar.');
+        }
+
+
+        localStorage.setItem('usuarioLogado', JSON.stringify({ email, admin: !!resultado.admin }));
+        alert(resultado.admin ? 'Login de administrador realizado com sucesso!' : 'Login realizado com sucesso!');
+        window.location.href = 'index.html';
+      } catch (erro) {
+        console.error('Erro no login:', erro);
+        alert(erro.message || 'Erro ao realizar login.');
+      }
+    });
+
+
+    // Capturando o envio do formulário de Cadastro
+    document.getElementById('form-cadastro').addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      const nome = document.getElementById('cad-nome').value.trim();
+      const email = document.getElementById('cad-email').value.trim();
+      const senha = document.getElementById('cad-senha').value;
+      const fase = document.getElementById('cad-fase').value;
+
+      if (!nome || !email || !senha || !fase) {
+        alert('Por favor, preencha todos os campos.');
+        return;
+      }
+
+      try {
+        const resposta = await fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nome, email, senha, fase })
+        });
+        const resultado = await resposta.json();
+        if (!resposta.ok) {
+          throw new Error(resultado.error || 'Falha ao realizar cadastro.');
+        }
+
+        const usuarioImpulsa = {
+          nome: nome,
+          email: email,
+          fase: fase,
+          conquistas: ['Cadastro Realizado'],
+          postagensComunidade: []
+        };
+
+        localStorage.setItem('usuarioLogado', JSON.stringify(usuarioImpulsa));
+        alert('Cadastro realizado com sucesso! Bem-vindo ao Impulsa+');
+        window.location.href = 'index.html';
+      } catch (erro) {
+        console.error('Erro no cadastro:', erro);
+        alert(erro.message || 'Erro ao realizar cadastro.');
+      }
+    });
+  </script>
+</body>
+</html>

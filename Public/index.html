@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Story Education</title>
+
+  <!-- Bibliotecas externas (Tailwind, Lucide Icons, Google Fonts) -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+  
+  <!-- Bibliotecas para animações -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+
+  <!-- Vínculo com o arquivo CSS externo -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-template-id="__page-root">
+  <!-- Barra de progresso de leitura -->
+  <div id="scroll-progress" class="scroll-progress-bar"></div>
+  <div class="top-rule"></div>
+  <header class="header-shell sticky top-0 z-30 w-full border-b border-[#d9d4c8]">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
+      <a href="#inicio" class="flex items-center gap-3" aria-label="Ir para o início"> 
+        <img src="./assets/logo.png" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" class="h-10 w-auto" loading="lazy" alt="Story Education Logo"> 
+        <div class="hidden h-10 w-10 rounded-lg bg-[#12211c] flex items-center justify-center text-white text-xl font-bold">S</div>
+        <span data-template-id="brand-name" class="canva-text text-base font-bold tracking-tight text-[#12211c]">Story Education</span> 
+      </a>
+      <nav class="hidden items-center gap-7 md:flex" aria-label="Navegação principal">
+        <a data-template-id="nav-problem" class="canva-link text-sm font-medium transition hover:text-[#ef6f3c]" href="#problema-solucao">Panorama</a> 
+        <a data-template-id="nav-pillars" class="canva-link text-sm font-medium transition hover:text-[#ef6f3c]" href="#pilares">Nossos Pilares</a> 
+        <a data-template-id="nav-lab" class="canva-link text-sm font-medium transition hover:text-[#ef6f3c]" href="#laboratorio">Espaço Prático</a> 
+        <a data-template-id="nav-courses" class="canva-link text-sm font-medium transition hover:text-[#ef6f3c]" href="#trilhas">Trilhas</a> 
+      </nav>
+      <div class="hidden items-center gap-3 md:flex">
+        <!-- Botões de Acessibilidade -->
+        <button id="btn-font-decrease" class="p-2 rounded-lg border border-[#d9d4c8] hover:bg-[#f6f2e9] transition" aria-label="Diminuir fonte" title="Diminuir fonte">
+          <i data-lucide="minus" width="18" height="18"></i>
+        </button>
+        <button id="btn-font-increase" class="p-2 rounded-lg border border-[#d9d4c8] hover:bg-[#f6f2e9] transition" aria-label="Aumentar fonte" title="Aumentar fonte">
+          <i data-lucide="plus" width="18" height="18"></i>
+        </button>
+        <button id="btn-contrast" class="p-2 rounded-lg border border-[#d9d4c8] hover:bg-[#f6f2e9] transition" aria-label="Alto contraste" title="Alto contraste">
+          <i data-lucide="circle-half" width="18" height="18"></i>
+        </button>
+        <a data-template-id="header-cta" class="canva-button border border-[#12211c] px-5 py-2.5 text-sm font-bold transition hover:bg-[#12211c] hover:text-white md:inline-flex" href="#contato">Experimente a Plataforma</a> 
+      </div> 
+      <button id="menu-button" class="inline-flex items-center justify-center p-2 text-[#12211c] md:hidden focus:outline-none focus:ring-2 focus:ring-[#ef6f3c]" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-menu"> 
+        <i data-lucide="menu" width="24" height="24"></i> 
+      </button>
+    </div>
+    <nav id="mobile-menu" class="hidden border-t border-[#d9d4c8] px-5 py-4 md:hidden" aria-label="Navegação mobile">
+      <div class="flex flex-col gap-3">
+        <a data-template-id="mobile-nav-problem" class="canva-link font-medium" href="#problema-solucao">Panorama</a> 
+        <a data-template-id="mobile-nav-pillars" class="canva-link font-medium" href="#pilares">Nossos Pilares</a> 
+        <a data-template-id="mobile-nav-lab" class="canva-link font-medium" href="#laboratorio">Espaço Prático</a> 
+        <a data-template-id="mobile-nav-courses" class="canva-link font-medium" href="#trilhas">Trilhas</a> 
+        <a data-template-id="mobile-nav-contact" class="canva-link font-medium" href="#contato">Experimente a Plataforma</a>
+      </div>
+      <!-- Botões de Acessibilidade Mobile -->
+      <div class="mt-4 flex items-center gap-3 pt-4 border-t border-[#d9d4c8]">
+        <button id="btn-font-decrease-mobile" class="p-2 rounded-lg border border-[#d9d4c8] hover:bg-[#f6f2e9] transition" aria-label="Diminuir fonte" title="Diminuir fonte">
+          <i data-lucide="minus" width="18" height="18"></i>
+        </button>
+        <button id="btn-font-increase-mobile" class="p-2 rounded-lg border border-[#d9d4c8] hover:bg-[#f6f2e9] transition" aria-label="Aumentar fonte" title="Aumentar fonte">
+          <i data-lucide="plus" width="18" height="18"></i>
+        </button>
+        <button id="btn-contrast-mobile" class="p-2 rounded-lg border border-[#d9d4c8] hover:bg-[#f6f2e9] transition" aria-label="Alto contraste" title="Alto contraste">
+          <i data-lucide="circle-half" width="18" height="18"></i>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO SECTION - Início de Alto Impacto -->
+    <section id="inicio" class="w-full">
+      <div class="mx-auto grid max-w-7xl lg:grid-cols-[1.02fr_.98fr]">
+        <div data-template-id="hero-panel" class="canva-panel flex min-h-[460px] flex-col justify-between bg-[#12211c] px-6 py-12 text-[#fffdf8] sm:px-10 lg:px-14 lg:py-16">
+          <div>
+            <p data-template-id="hero-kicker" class="canva-text mb-7 text-xs font-bold uppercase tracking-[.2em]">Educação &amp; Narrativa</p>
+            <div class="scribble mb-6"></div>
+            <h1 data-template-id="hero-title" class="canva-text display-font max-w-xl text-4xl sm:text-5xl font-bold leading-[1.04]">Transforme a Educação Passiva em Aprendizagem Ativa e Protagonista</h1>
+            <p data-template-id="hero-description" class="canva-text mt-7 max-w-lg text-lg leading-relaxed">Nossa metodologia baseada em 6 pilares educacionais transforma alunos em protagonistas do próprio conhecimento através de narrativas imersivas.</p>
+          </div>
+          <div class="reveal reveal-delay-2 mt-10 flex flex-wrap items-center gap-5">
+            <a data-template-id="hero-cta" class="canva-button inline-flex items-center gap-2 bg-[#d9ee69] text-[#12211c] px-5 py-3.5 font-bold transition hover:brightness-110" href="#laboratorio">Conheça o Ecossistema</a> 
+            <a data-template-id="hero-demo" class="canva-button inline-flex items-center gap-2 border border-[#fffdf8] text-[#fffdf8] px-5 py-3.5 font-bold transition hover:bg-[#fffdf8] hover:text-[#12211c]" href="#contato">Experimente a Plataforma</a>
+          </div>
+        </div>
+        <div class="hero-image-wrap">
+          <img data-template-id="hero-image" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&amp;fit=crop&amp;w=800&amp;q=80" class="canva-image" loading="lazy" alt="Estudantes colaborando">
+          <div class="absolute bottom-0 left-0 z-10 m-5 max-w-[280px] bg-[#fffdf8] p-5 text-[#12211c] sm:m-7">
+            <p data-template-id="hero-image-caption" class="canva-text text-sm font-semibold leading-snug">Metodologias aplicadas em ambientes dinâmicos de aprendizagem.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO PANORAMA EDUCACIONAL - Diagnóstico & Oportunidades -->
+    <section id="problema-solucao" class="w-full bg-[#f6f2e9] px-5 py-20 lg:px-8 lg:py-28">
+      <div class="mx-auto max-w-7xl">
+        <div class="max-w-3xl">
+          <p class="canva-text text-xs font-bold uppercase tracking-[.2em">Diagnóstico & Oportunidades</p>
+          <h2 class="canva-text display-font mt-4 text-3xl sm:text-4xl font-bold leading-tight">Panorama Educacional</h2>
+          <p class="canva-text mt-4 max-w-lg text-lg leading-relaxed">Realidade & Desafios da Educação Brasileira.</p>
+        </div>
+        
+        <div class="mt-12 grid gap-8 md:grid-cols-3">
+          <div class="glass-card p-8 text-center">
+            <p class="text-sm font-medium text-slate-500">IDEB Médio Brasil</p>
+            <h3 class="counter-number mt-3 text-4xl font-extrabold" data-value="5.9">5.9</h3>
+            <p class="mt-2 text-sm text-slate-600">Abaixo do esperado</p>
+          </div>
+          <div class="glass-card p-8 text-center">
+            <p class="text-sm font-medium text-slate-500">Evasão Escolar</p>
+            <h3 class="counter-number mt-3 text-4xl font-extrabold" data-value="12">12%</h3>
+            <p class="mt-2 text-sm text-slate-600">No ensino médio</p>
+          </div>
+          <div class="glass-card p-8 text-center">
+            <p class="text-sm font-medium text-slate-500">Escolas sem Laboratório</p>
+            <h3 class="counter-number mt-3 text-4xl font-extrabold" data-value="67">67%</h3>
+            <p class="mt-2 text-sm text-slate-600">Infraestrutura precária</p>
+          </div>
+        </div>
+
+        <div class="mt-16 grid gap-8 lg:grid-cols-2">
+          <div class="glass-card p-8 border-l-4 border-red-500">
+            <h3 class="display-font text-2xl font-bold text-red-600">Modelo Tradicional Fabril</h3>
+            <ul class="mt-4 space-y-3 text-slate-700">
+              <li class="flex items-start gap-3"><span class="text-red-500">✗</span> Aprendizagem passiva e memorização</li>
+              <li class="flex items-start gap-3"><span class="text-red-500">✗</span> Conteúdo desconectado da realidade</li>
+              <li class="flex items-start gap-3"><span class="text-red-500">✗</span> Avaliação padronizada e sem contexto</li>
+              <li class="flex items-start gap-3"><span class="text-red-500">✗</span> Baixa engajamento e motivação</li>
+            </ul>
+          </div>
+          <div class="glass-card p-8 border-l-4 border-[#d9ee69]">
+            <h3 class="display-font text-2xl font-bold text-[#12211c]">Metodologia Story Education</h3>
+            <ul class="mt-4 space-y-3 text-slate-700">
+              <li class="flex items-start gap-3"><span class="text-[#d9ee69]">✓</span> Aprendizagem ativa e protagonista</li>
+              <li class="flex items-start gap-3"><span class="text-[#d9ee69]">✓</span> Narrativas conectadas ao contexto real</li>
+              <li class="flex items-start gap-3"><span class="text-[#d9ee69]">✓</span> Avaliação personalizada e contínua</li>
+              <li class="flex items-start gap-3"><span class="text-[#d9ee69]">✓</span> Alto engajamento e motivação</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 PILARES DO STORY EDUCATION -->
+    <section id="pilares" class="w-full bg-[#e2e8df] px-5 py-20 lg:px-8 lg:py-28">
+      <div class="mx-auto max-w-7xl">
+        <div class="max-w-3xl">
+          <p class="canva-text text-xs font-bold uppercase tracking-[.2em]">Nossa Metodologia</p>
+          <h2 class="canva-text display-font mt-4 text-3xl sm:text-4xl font-bold leading-tight">Os 6 Pilares do Story Education</h2>
+          <p class="canva-text mt-4 max-w-lg text-lg leading-relaxed">Uma abordagem holística que transforma cada aspecto da experiência educativa.</p>
+        </div>
+        
+        <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <article class="glass-card p-7">
+            <span class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#d9ee69] text-[#12211c]"><i data-lucide="book-open" width="24" height="24"></i></span>
+            <h3 class="display-font text-xl font-bold leading-tight">Gênese Histórica</h3>
+            <p class="mt-4 leading-relaxed text-slate-600">Conecta o aprendizado à história e contexto cultural dos alunos, criando significado profundo.</p>
+          </article>
+          
+          <article class="glass-card p-7">
+            <span class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#f5b38f] text-[#12211c]"><i data-lucide="shield-check" width="24" height="24"></i></span>
+            <h3 class="display-font text-xl font-bold leading-tight">Acesso e Equidade</h3>
+            <p class="mt-4 leading-relaxed text-slate-600">Garante oportunidades iguais para todos, independentemente de origem ou condição socioeconômica.</p>
+          </article>
+          
+          <article class="glass-card p-7">
+            <span class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#c7dddc] text-[#12211c]"><i data-lucide="layout" width="24" height="24"></i></span>
+            <h3 class="display-font text-xl font-bold leading-tight">Flexibilidade Curricular</h3>
+            <p class="mt-4 leading-relaxed text-slate-600">Adapta o conteúdo às necessidades e ritmos de aprendizagem de cada estudante.</p>
+          </article>
+          
+          <article class="glass-card p-7">
+            <span class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#a78bfa] text-white"><i data-lucide="building-2" width="24" height="24"></i></span>
+            <h3 class="display-font text-xl font-bold leading-tight">Gestão de Recursos</h3>
+            <p class="mt-4 leading-relaxed text-slate-600">Otimiza infraestrutura, materiais e tempo para maximizar o impacto educacional.</p>
+          </article>
+          
+          <article class="glass-card p-7">
+            <span class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#fb923c] text-white"><i data-lucide="heart" width="24" height="24"></i></span>
+            <h3 class="display-font text-xl font-bold leading-tight">Nutrição e Permanência</h3>
+            <p class="mt-4 leading-relaxed text-slate-600">Integra bem-estar físico e emocional para garantir permanência e sucesso escolar.</p>
+          </article>
+          
+          <article class="glass-card p-7">
+            <span class="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#38bdf8] text-white"><i data-lucide="zap" width="24" height="24"></i></span>
+            <h3 class="display-font text-xl font-bold leading-tight">Aprendizagem Ativa</h3>
+            <p class="mt-4 leading-relaxed text-slate-600">Transforma alunos em protagonistas através de projetos, debates e experiências práticas.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- LABORATÓRIO EXPERIMENTAL - Espaço Prático / Demo -->
+    <section id="laboratorio" class="w-full bg-[#f6f2e9] px-5 py-20 lg:px-8 lg:py-28">
+      <div class="mx-auto max-w-7xl">
+        <div class="grid gap-10 lg:grid-cols-[.78fr_1.22fr] lg:items-end">
+          <div>
+            <p data-template-id="lab-kicker" class="canva-text text-xs font-bold uppercase tracking-[.2em]">Espaço Prático</p>
+            <h2 data-template-id="lab-title" class="canva-text display-font mt-4 text-3xl sm:text-4xl font-bold leading-tight">Laboratório Experimental</h2>
+          </div>
+          <p data-template-id="lab-intro" class="canva-text max-w-xl leading-relaxed">Teste abordagens diferentes e escolha o foco ideal para a sua jornada de desenvolvimento.</p>
+        </div>
+        
+        <div data-template-id="simulator-panel" class="canva-panel mt-12 border border-[#12211c] bg-[#fffdf8] p-6 shadow-[7px_7px_0_#12211c] lg:p-9">
+          <div class="flex flex-col justify-between gap-5 border-b border-[#c5ccc3] pb-7 md:flex-row md:items-end">
+            <div>
+              <p data-template-id="simulator-eyebrow" class="canva-text text-xs font-bold uppercase tracking-[.16em]">Simulador</p>
+              <h3 data-template-id="simulator-title" class="canva-text display-font mt-3 text-2xl font-bold leading-tight">Escolha uma abordagem</h3>
+            </div>
+            <p data-template-id="simulator-help" class="canva-text max-w-sm text-sm leading-relaxed">Clique nos botões abaixo para ver o impacto no resultado.</p>
+          </div>
+          <div class="mt-8 grid gap-4 md:grid-cols-3" role="group" aria-label="Escolha o foco da jornada">
+            <button data-choice="story" data-template-id="choice-story" class="canva-button choice-button p-5 text-left font-bold focus:outline-none focus:ring-2 focus:ring-[#ef6f3c]" type="button">Foco em História</button> 
+            <button data-choice="experiment" data-template-id="choice-experiment" class="canva-button choice-button p-5 text-left font-bold focus:outline-none focus:ring-2 focus:ring-[#ef6f3c]" type="button">Foco em Experimento</button> 
+            <button data-choice="community" data-template-id="choice-community" class="canva-button choice-button p-5 text-left font-bold focus:outline-none focus:ring-2 focus:ring-[#ef6f3c]" type="button">Foco em Comunidade</button>
+          </div>
+          <div class="mt-8">
+            <div id="result-default" data-template-id="result-default" class="sim-result canva-banner border-l-4 border-[#ef6f3c] bg-[#f6f2e9] p-5">
+              Selecione uma das opções acima para visualizar os detalhes do plano.
+            </div>
+            <div id="result-story" data-template-id="result-story" class="sim-result canva-banner border-l-4 border-[#ef6f3c] bg-[#fff1e9] p-5" hidden>
+              <strong>Plano focado em Storytelling:</strong> Desenvolvimento focado em estruturação de casos e apresentações de alto impacto.
+            </div>
+            <div id="result-experiment" data-template-id="result-experiment" class="sim-result canva-banner border-l-4 border-[#12211c] bg-[#eef7c6] p-5" hidden>
+              <strong>Plano focado em Experimento:</strong> Prototipagem rápida, testes de usabilidade e iterações constantes.
+            </div>
+            <div id="result-community" data-template-id="result-community" class="sim-result canva-banner border-l-4 border-[#2f6f70] bg-[#e2f0ef] p-5" hidden>
+              <strong>Plano focado em Comunidade:</strong> Dinâmicas em grupo, fóruns de debate e projetos colaborativos.
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-20 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <div class="max-w-2xl">
+            <p data-template-id="methods-kicker" class="canva-text text-xs font-bold uppercase tracking-[.2em]">Interatividade</p>
+            <h2 data-template-id="methods-title" class="canva-text display-font mt-4 text-3xl font-bold leading-tight">Metodologias Interativas</h2>
+          </div>
+          <p data-template-id="methods-note" class="canva-text max-w-sm leading-relaxed">Clique nos cartões abaixo para virar e descobrir os detalhes.</p>
+        </div>
+        <div class="mt-10 grid gap-6 md:grid-cols-3">
+          <button class="method-card text-left focus:outline-none focus:ring-2 focus:ring-[#ef6f3c]" type="button" aria-pressed="false">
+            <div class="method-inner">
+              <article data-template-id="method-one-front" class="method-front canva-card bg-[#12211c] p-7 text-[#fffdf8]">
+                <div>
+                  <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#d9ee69] text-[#12211c]"><i data-lucide="pen-line" width="19" height="19"></i></span>
+                  <h3 data-template-id="method-one-title" class="canva-text display-font mt-8 text-xl font-bold leading-tight">Escrita Criativa</h3>
+                  <p data-template-id="method-one-summary" class="canva-text mt-4 leading-relaxed">Aprenda a estruturar ideias em formatos claros e envolventes.</p>
+                </div>
+                <span data-template-id="method-flip-hint" class="canva-text text-xs font-bold uppercase tracking-[.13em]">Clique para virar ↺</span>
+              </article>
+              <article data-template-id="method-one-back" class="method-back canva-card bg-[#ef6f3c] p-7 text-white">
+                <div>
+                  <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#12211c] text-[#fffdf8]"><i data-lucide="lightbulb" width="19" height="19"></i></span>
+                  <h3 data-template-id="method-one-back-title" class="canva-text display-font mt-8 text-xl font-bold leading-tight">Módulos Práticos</h3>
+                  <p data-template-id="method-one-back-text" class="canva-text mt-4 leading-relaxed">Exercícios guiados com exemplos do dia a dia e aplicação imediata.</p>
+                </div>
+              </article>
+            </div>
+          </button>
+          
+          <button class="method-card text-left focus:outline-none focus:ring-2 focus:ring-[#ef6f3c]" type="button" aria-pressed="false">
+            <div class="method-inner">
+              <article data-template-id="method-two-front" class="method-front canva-card bg-[#fffdf8] p-7">
+                <div>
+                  <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#f5b38f]"><i data-lucide="flask-conical" width="19" height="19"></i></span>
+                  <h3 data-template-id="method-two-title" class="canva-text display-font mt-8 text-xl font-bold leading-tight">Prototipagem</h3>
+                  <p data-template-id="method-two-summary" class="canva-text mt-4 leading-relaxed">Teste conceitos rapidamente antes da implementação final.</p>
+                </div>
+                <span data-template-id="method-flip-hint-two" class="canva-text text-xs font-bold uppercase tracking-[.13em]">Clique para virar ↺</span>
+              </article>
+              <article data-template-id="method-two-back" class="method-back canva-card bg-[#d9ee69] p-7 text-[#12211c]">
+                <div>
+                  <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#12211c] text-[#fffdf8]"><i data-lucide="search" width="19" height="19"></i></span>
+                  <h3 data-template-id="method-two-back-title" class="canva-text display-font mt-8 text-xl font-bold leading-tight">Análise de Dados</h3>
+                  <p data-template-id="method-two-back-text" class="canva-text mt-4 leading-relaxed">Métricas claras para entender o progresso e realizar ajustes.</p>
+                </div>
+              </article>
+            </div>
+          </button>
+
+          <button class="method-card text-left focus:outline-none focus:ring-2 focus:ring-[#ef6f3c]" type="button" aria-pressed="false">
+            <div class="method-inner">
+              <article data-template-id="method-three-front" class="method-front canva-card bg-[#c7dddc] p-7">
+                <div>
+                  <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#12211c] text-[#fffdf8]"><i data-lucide="messages-square" width="19" height="19"></i></span>
+                  <h3 data-template-id="method-three-title" class="canva-text display-font mt-8 text-xl font-bold leading-tight">Debates Guiados</h3>
+                  <p data-template-id="method-three-summary" class="canva-text mt-4 leading-relaxed">Espaço seguro para trocas construtivas e feedbacks.</p>
+                </div>
+                <span data-template-id="method-flip-hint-three" class="canva-text text-xs font-bold uppercase tracking-[.13em]">Clique para virar ↺</span>
+              </article>
+              <article data-template-id="method-three-back" class="method-back canva-card bg-[#2f6f70] p-7 text-[#fffdf8]">
+                <div>
+                  <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#d9ee69] text-[#12211c]"><i data-lucide="network" width="19" height="19"></i></span>
+                  <h3 data-template-id="method-three-back-title" class="canva-text display-font mt-8 text-xl font-bold leading-tight">Rede de Apoio</h3>
+                  <p data-template-id="method-three-back-text" class="canva-text mt-4 leading-relaxed">Conexão com mentores e profissionais da área.</p>
+                </div>
+              </article>
+            </div>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="trilhas" class="w-full bg-[#f6f2e9] px-5 py-20 lg:px-8 lg:py-28">
+      <div class="mx-auto max-w-7xl">
+        <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <div class="max-w-2xl">
+            <p data-template-id="courses-kicker" class="canva-text text-xs font-bold uppercase tracking-[.2em]">Programas</p>
+            <h2 data-template-id="courses-title" class="canva-text display-font mt-4 text-3xl font-bold leading-tight">Trilhas de Aprendizagem</h2>
+          </div>
+          <p data-template-id="courses-intro" class="canva-text max-w-sm leading-relaxed">Escolha a trilha que mais combina com seus objetivos atuais.</p>
+        </div>
+        <div class="mt-12 grid gap-6 md:grid-cols-3">
+          <article data-template-id="course-one-card" class="canva-card course-card overflow-hidden bg-[#fffdf8]">
+            <div class="h-56 overflow-hidden">
+              <img data-template-id="course-one-image" src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&amp;fit=crop&amp;w=600&amp;q=80" class="canva-image h-full w-full object-cover" loading="lazy" alt="Curso 1">
+            </div>
+            <div class="p-6">
+              <p data-template-id="course-one-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]">Trilha 01</p>
+              <h3 data-template-id="course-one-title" class="canva-text display-font mt-3 text-xl font-bold leading-tight">Narrativas que Ensinam</h3>
+              <p data-template-id="course-one-text" class="canva-text mt-4 leading-relaxed">Aprenda a aplicar técnicas de storytelling em projetos educacionais.</p>
+              <button data-interest="Narrativas que ensinam" data-template-id="course-one-button" class="canva-button mt-7 inline-flex font-bold underline decoration-2 underline-offset-4" type="button">Tenho interesse</button>
+            </div>
+          </article>
+
+          <article data-template-id="course-two-card" class="canva-card course-card overflow-hidden bg-[#fffdf8]">
+            <div class="h-56 overflow-hidden">
+              <img data-template-id="course-two-image" src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&amp;fit=crop&amp;w=600&amp;q=80" class="canva-image h-full w-full object-cover" loading="lazy" alt="Curso 2">
+            </div>
+            <div class="p-6">
+              <p data-template-id="course-two-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]">Trilha 02</p>
+              <h3 data-template-id="course-two-title" class="canva-text display-font mt-3 text-xl font-bold leading-tight">Tecnologia com Intenção</h3>
+              <p data-template-id="course-two-text" class="canva-text mt-4 leading-relaxed">Uso consciente e prático de ferramentas digitais no ensino.</p>
+              <button data-interest="Tecnologia com intenção" data-template-id="course-two-button" class="canva-button mt-7 inline-flex font-bold underline decoration-2 underline-offset-4" type="button">Tenho interesse</button>
+            </div>
+          </article>
+
+          <article data-template-id="course-three-card" class="canva-card course-card overflow-hidden bg-[#fffdf8]">
+            <div class="h-56 overflow-hidden">
+              <img data-template-id="course-three-image" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&amp;fit=crop&amp;w=600&amp;q=80" class="canva-image h-full w-full object-cover" loading="lazy" alt="Curso 3">
+            </div>
+            <div class="p-6">
+              <p data-template-id="course-three-label" class="canva-text text-xs font-bold uppercase tracking-[.16em]">Trilha 03</p>
+              <h3 data-template-id="course-three-title" class="canva-text display-font mt-3 text-xl font-bold leading-tight">Comunidades que Criam</h3>
+              <p data-template-id="course-three-text" class="canva-text mt-4 leading-relaxed">Como engajar redes colaborativas para construir projetos em conjunto.</p>
+              <button data-interest="Comunidades que criam" data-template-id="course-three-button" class="canva-button mt-7 inline-flex font-bold underline decoration-2 underline-offset-4" type="button">Tenho interesse</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FORMULÁRIO DE CONVERSÃO - Lead Generation -->
+    <section id="contato" class="w-full bg-[#12211c] px-5 py-20 text-[#fffdf8] lg:px-8 lg:py-28">
+      <div class="mx-auto max-w-4xl text-center">
+        <p class="canva-text text-xs font-bold uppercase tracking-[.2em]">Transforme sua escola</p>
+        <h2 class="canva-text display-font mt-4 text-3xl sm:text-4xl font-bold leading-tight">Experimente o Story Education</h2>
+        <p class="canva-text mt-6 max-w-2xl mx-auto text-lg leading-relaxed">Junte-se às escolas que estão transformando a educação através de metodologias ativas e narrativas imersivas.</p>
+      </div>
+      
+      <div class="mx-auto mt-12 max-w-2xl">
+        <form id="contact-form" class="glass-card p-8" novalidate>
+          <div class="space-y-6">
+            <div>
+              <label class="canva-text mb-2 block text-sm font-bold text-[#12211c]" for="name">Nome completo</label> 
+              <input id="name" class="field-control" type="text" name="name" autocomplete="name" placeholder="Seu nome" required>
+            </div>
+            <div>
+              <label class="canva-text mb-2 block text-sm font-bold text-[#12211c]" for="email">E-mail</label> 
+              <input id="email" class="field-control" type="email" name="email" autocomplete="email" placeholder="seu@email.com" required>
+            </div>
+            <div>
+              <label class="canva-text mb-2 block text-sm font-bold text-[#12211c]" for="institution-type">Tipo de Instituição</label> 
+              <select id="institution-type" class="field-control" name="institution-type" required> 
+                <option value="" disabled selected>Selecione o tipo</option> 
+                <option value="publica">Escola Pública</option> 
+                <option value="privada">Escola Privada</option> 
+                <option value="municipal">Rede Municipal</option> 
+                <option value="estadual">Rede Estadual</option> 
+                <option value="federal">Rede Federal</option> 
+              </select>
+            </div>
+            <div>
+              <label class="canva-text mb-2 block text-sm font-bold text-[#12211c]" for="message">Mensagem (opcional)</label> 
+              <textarea id="message" class="field-control min-h-24 resize-y" name="message" placeholder="Conte-nos sobre sua escola..."></textarea>
+            </div>
+          </div>
+          <p id="form-status" class="status-message mt-5 rounded-sm border px-4 py-3 text-sm" role="status" aria-live="polite" hidden></p>
+          <button id="submit-button" class="canva-button mt-7 w-full inline-flex items-center justify-center gap-2 bg-[#d9ee69] text-[#12211c] px-6 py-4 text-lg font-bold transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60" type="submit"> 
+            <i data-lucide="send" width="20" height="20"></i> 
+            <span class="canva-text">Experimentar o Story Education</span> 
+          </button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="w-full bg-[#12211c] px-5 pb-7 lg:px-8">
+    <div class="mx-auto flex max-w-7xl flex-col gap-3 border-t border-[#405148] pt-7 sm:flex-row sm:items-center sm:justify-between text-[#fffdf8]">
+      <p data-template-id="footer-copy" class="canva-text text-sm">© Story Education. Todos os direitos reservados.</p>
+      <p data-template-id="footer-tagline" class="canva-text text-sm font-medium">Redefinindo o aprendizado através de histórias.</p>
+    </div>
+  </footer>
+
+  <!-- Widget VLibras - Acessibilidade em Libras -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper class="active">
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+
+  <!-- Vínculo com o arquivo JS externo -->
+  <script src="script.js"></script>
+</body>
+</html>
+
