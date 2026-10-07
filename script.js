@@ -27,17 +27,27 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     const defaultResult = document.getElementById("result-default");
   
-    document.querySelectorAll("[data-choice]").forEach((button) => {
-      button.addEventListener("click", () => {
-        const choice = button.dataset.choice;
+    // Função para selecionar uma opção do simulador
+    function selectChoice(choice) {
+      const button = document.querySelector(`[data-choice="${choice}"]`);
+      if (button) {
         document.querySelectorAll("[data-choice]").forEach((item) => {
           item.classList.toggle("is-active", item === button);
           item.setAttribute("aria-pressed", String(item === button));
         });
-  
+
         defaultResult.hidden = true;
         Object.values(resultPanels).forEach((panel) => panel.hidden = true);
         resultPanels[choice].hidden = false;
+      }
+    }
+
+    // Selecionar a primeira opção por padrão ao carregar
+    selectChoice('story');
+
+    document.querySelectorAll("[data-choice]").forEach((button) => {
+      button.addEventListener("click", () => {
+        selectChoice(button.dataset.choice);
       });
     });
   
@@ -48,16 +58,14 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   
-    const interestSelect = document.getElementById("interest");
-    if (interestSelect) {
-      document.querySelectorAll("[data-interest]").forEach((button) => {
-        button.addEventListener("click", () => {
-          interestSelect.value = button.dataset.interest;
-          document.getElementById("contato").scrollIntoView({ behavior: "smooth", block: "start" });
-          window.setTimeout(() => document.getElementById("name").focus(), 500);
-        });
+    // Botões CTA que rolam até o formulário
+    document.querySelectorAll('a[href="#contato"]').forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        document.getElementById("contato").scrollIntoView({ behavior: "smooth", block: "start" });
+        window.setTimeout(() => document.getElementById("name")?.focus(), 500);
       });
-    }
+    });
   
     const form = document.getElementById("contact-form");
     const submitButton = document.getElementById("submit-button");
@@ -83,11 +91,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       submitButton.disabled = true;
 
-      const institutionType = document.getElementById("institution-type");
+      const profile = document.getElementById("profile");
       const record = {
         name: document.getElementById("name").value.trim(),
         email: document.getElementById("email").value.trim(),
-        institution_type: institutionType ? institutionType.value : null,
+        profile: profile ? profile.value : null,
         message: document.getElementById("message").value.trim(),
         created_at: new Date().toISOString()
       };
